@@ -7,7 +7,7 @@ WINDSENSOR::WINDSENSOR() {
 
 void WINDSENSOR::init() {
     delay(5000);
-    Monitor.println("[WINDSENSOR] Initializating WindSensor (20 sec max)");
+    Monitor.println("[WINDSENSOR] Initializing WindSensor (20 sec max)");
     Monitor.println("[WINDSENSOR] --> Put the WindSensor in motion");
 
     unsigned long startTime = millis();

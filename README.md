@@ -1,6 +1,6 @@
 # ⛵ RC Sailboat Autopilot
 
-RC Sailboat Autopilot is an Arduino UNO Q-based autopilot TIPE project for an RC sailboat. It combines onboard sensors (magnetometer, wind sensor), rudder control, and a Python bridge for data logging. Feel free to read the MCOT (French), it explains some details about the whys of the project and includes some sources to understand the theory behing it.
+RC Sailboat Autopilot is an Arduino UNO Q-based autopilot TIPE project for an RC sailboat. It combines onboard sensors (magnetometer, wind sensor), rudder control, and a Python bridge for data logging. Feel free to read the MCOT (French), it explains some details about the whys of the project and includes some sources to understand the theory behind it.
 
 ## What this project does
 
@@ -98,9 +98,9 @@ It also snapshots `sketch/CONFIG.h` into the top of each file so every experimen
 No license file is currently provided in this repository.
 
 
-## Usefull links : 
+## Useful links:
 
 - Arduino Uno Q User Manual (useful to understand how the Arduino Uno Q works)
 https://docs.arduino.cc/tutorials/uno-q/user-manual/
 - Arduino App CLI (to understand how an Arduino Uno Q app runs)
-https:://github.com/arduino/arduino-app-cli 
+https://github.com/arduino/arduino-app-cli

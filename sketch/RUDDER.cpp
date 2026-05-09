@@ -7,7 +7,7 @@ RUDDER::RUDDER() {
 
 
 void RUDDER::init() {
-  Monitor.println("[RUDDER] Initializating Adafruit Servo Shield...");
+  Monitor.println("[RUDDER] Initializing Adafruit Servo Shield...");
 
   pwm.begin();
   pwm.setPWMFreq(50);
