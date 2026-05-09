@@ -16,7 +16,6 @@ public:
 private:
     uint16_t rudder_value;
     uint16_t mode_control_value;
-    uint16_t get_mode_control_value();
     bool unmanned_status = false;
     uint8_t lost_frames = 0;
     bool link_lost = false;
