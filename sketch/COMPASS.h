@@ -10,7 +10,7 @@
 class COMPASS {
 public:
     COMPASS();
-    bool init();
+    void init();
     void update();
     uint16_t get_heading(); // renvoie l'angle fait avec le nord magnétique en degrés
 

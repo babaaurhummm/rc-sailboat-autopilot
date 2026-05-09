@@ -7,7 +7,7 @@ COMPASS::COMPASS() {
     Bz = 0;
 }
 
-bool COMPASS::init() {
+void COMPASS::init() {
     Wire.begin();
 
     Monitor.println("[COMPASS] Initialisation...");
@@ -20,7 +20,7 @@ bool COMPASS::init() {
     if (error != 0) {
         Monitor.print("[COMPASS] ERREUR I2C - capteur non detecte a l'adresse 0x");
         Monitor.println(HMC5883L_ADDR, HEX);
-        return false;
+        return;
     }
 
     Monitor.println("[COMPASS] Capteur detecte sur bus I2C.");
@@ -33,7 +33,7 @@ bool COMPASS::init() {
 
     if (error != 0) {
         Monitor.println("[COMPASS] ERREUR communication registre.");
-        return false;
+        return;
     }
 
     Monitor.println("[COMPASS] Communication registres OK.");
@@ -45,7 +45,7 @@ bool COMPASS::init() {
     Wire.write(0x00);
     if (Wire.endTransmission() != 0) {
         Monitor.println("[COMPASS] ERREUR config mode.");
-        return false;
+        return;
     }
 
     // 4. CONFIGURATION GAIN
@@ -55,12 +55,10 @@ bool COMPASS::init() {
     Wire.write(0x20);
     if (Wire.endTransmission() != 0) {
         Monitor.println("[COMPASS] ERREUR config gain.");
-        return false;
+        return;
     }
 
     Monitor.println("[COMPASS] OK - magnetometre operationnel.");
-
-    return true;
 }
 
 void COMPASS::update() {
