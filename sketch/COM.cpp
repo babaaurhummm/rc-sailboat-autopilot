@@ -13,6 +13,9 @@ void COM::init() {
   delay(1000);
   Monitor.println("[COM] Waiting for MANNED mode...");
 
+  // Block here until the operator confirms the RC link with the mode switch
+  // in MANNED. This is intentional: the boat must not move until the human
+  // has acknowledged radio control on the dock.
   while (true) {
     mode_control_value = pulseIn(PIN_MODE_CONTROL, HIGH, 25000);
 
