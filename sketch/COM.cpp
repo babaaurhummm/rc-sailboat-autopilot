@@ -2,7 +2,7 @@
 
 COM::COM() {
   rudder_value = pwm_rudder_center;
-  mode_control_value = pwm_mode_treshold;
+  mode_control_value = pwm_mode_threshold;
 }
 
 void COM::init() {
@@ -16,7 +16,7 @@ void COM::init() {
   while (true) {
     mode_control_value = pulseIn(PIN_MODE_CONTROL, HIGH, 25000);
 
-    if (mode_control_value > pwm_mode_treshold) {
+    if (mode_control_value > pwm_mode_threshold) {
       Monitor.println("[COM] MANNED mode detected.");
       break;
     }
