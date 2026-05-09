@@ -95,7 +95,12 @@ int rudder_angle_sp(int awa_sp) {
 #else
 
 int rudder_angle_sp(int heading_sp) {
-  const int16_t e = static_cast<int16_t>(heading_sp) - static_cast<int16_t>(compass.get_heading());
+  // Heading is an angle on a circle, so a textbook P-controller error
+  // (sp - measured) is wrong near the 0/360 wrap: an "error" of -350 deg
+  // really means +10 deg the other way. We fold the raw difference into
+  // (-180, 180] so the controller always picks the shortest turn.
+  int16_t e = static_cast<int16_t>(heading_sp) - static_cast<int16_t>(compass.get_heading());
+  e = ((e % 360) + 540) % 360 - 180;
   return Kp * e;
 }
 
