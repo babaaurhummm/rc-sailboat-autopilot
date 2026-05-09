@@ -68,7 +68,7 @@ void COMPASS::update() {
     Wire.write(0x03);
     Wire.endTransmission();
 
-    Wire.requestFrom(HMC5883L_ADDR, 6);
+    Wire.requestFrom((uint8_t)HMC5883L_ADDR, (uint8_t)6);
 
     if (Wire.available() == 6) {
         Bx = (Wire.read() << 8) | Wire.read();
