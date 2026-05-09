@@ -11,9 +11,14 @@ COMPASS compass;
 RUDDER rudder;
 WINDSENSOR windsensor;
 
+void wait_until_next_loop();
+
 #if FULL_UNMANNED_MODE
 
 void setup() {
+  Bridge.begin();
+  Monitor.begin();
+  delay(1000);
   com.init();
   rudder.init();
 }
@@ -26,7 +31,6 @@ void loop() {
 
 #else
 
-void wait_until_next_loop();
 void update();
 void save_data();
 int rudder_angle_sp();
@@ -79,18 +83,6 @@ void save_data() {
 }
 
 
-void wait_until_next_loop() {
-  static unsigned long last_loop_start = millis();
-  const unsigned long now = millis();
-  const unsigned long elapsed = now - last_loop_start;
-
-  if (elapsed < loop_period_ms) {
-    delay(loop_period_ms - elapsed);
-  }
-
-  last_loop_start = millis();
-}
-
 #if AWA_FOLLOW_MODE
 
 int rudder_angle_sp(int awa_sp) {
@@ -113,3 +105,15 @@ int rudder_angle_sp(int heading_sp) {
 
 
 #endif
+
+void wait_until_next_loop() {
+  static unsigned long last_loop_start = millis();
+  const unsigned long now = millis();
+  const unsigned long elapsed = now - last_loop_start;
+
+  if (elapsed < loop_period_ms) {
+    delay(loop_period_ms - elapsed);
+  }
+
+  last_loop_start = millis();
+}
