@@ -10,7 +10,9 @@ constexpr uint16_t pwm_mode_threshold = 1500;
 constexpr uint16_t pwm_rudder_center = 1500;
 constexpr uint16_t pwm_rudder_max = 2000;
 constexpr uint16_t pwm_rudder_min = 1100;
-constexpr uint16_t com_pulse_timeout_us = 3000;
+// One RC frame is ~20 ms; pulseIn must wait at least that long for a rising edge.
+constexpr uint16_t com_pulse_timeout_us = 22000;
+constexpr uint8_t com_lost_frames_threshold = 10;  // consecutive timeouts before failsafe
 
 constexpr uint16_t ADC_rudder_center = 534;
 // ADC_rudder_max = 606
