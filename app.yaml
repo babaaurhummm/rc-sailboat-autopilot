@@ -1,0 +1,5 @@
+name: rc-sailboat-autopilot
+description: RC Sailboat Autopilot is an Arduino UNO Q-based autopilot TIPE project for an RC sailboat. It combines onboard sensors (magnetometer, wind sensor),
+ports: []
+bricks: []
+icon: ⛵
