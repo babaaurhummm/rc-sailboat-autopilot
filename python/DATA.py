@@ -80,18 +80,17 @@ class DATA:
                     pass
         return max_num + 1
 
-    def _snapshot_config(self, log_file: str, config_path: str):
+    def _snapshot_config(self, snapshot_path: str, config_path: str):
         """
-        Lit CONFIG.h et l'écrit en commentaire en tête du fichier CSV.
+        Lit CONFIG.h et l'écrit verbatim dans un fichier sidecar.
         Si CONFIG.h est introuvable, écrit un avertissement et continue.
         """
         try:
             with open(config_path, "r") as f:
                 config_content = f.read()
-            with open(log_file, "a", newline="") as f:
-                for line in config_content.splitlines():
-                    f.write(f"# {line}\n")
-            print(f"[DATA] CONFIG.h snapshotté dans {log_file}", flush=True)
+            with open(snapshot_path, "w") as f:
+                f.write(config_content)
+            print(f"[DATA] CONFIG.h snapshotté dans {snapshot_path}", flush=True)
         except FileNotFoundError:
             print(f"[DATA] AVERTISSEMENT : CONFIG.h introuvable à {config_path}", flush=True)
 
@@ -100,19 +99,18 @@ class DATA:
         os.makedirs(log_dir, exist_ok=True)
         session_num = self._get_next_session_number(log_dir)
         log_file = os.path.join(log_dir, f"session_{session_num:04d}.csv")
-    
-        # Chemin de CONFIG.h : /app/sketch/CONFIG.h
+        snapshot_file = os.path.join(log_dir, f"session_{session_num:04d}.config.h")
+
         config_path = os.path.join(
             os.path.dirname(os.path.dirname(__file__)), "sketch", "CONFIG.h"
         )
-    
+
         with open(log_file, "w", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=self._headers)
             writer.writeheader()
-    
-        # Snapshot de CONFIG.h en tête de fichier
-        # Note : les lignes préfixées par # sont ignorées par csv.DictReader
-        self._snapshot_config(log_file, config_path)
-    
+
+        # Snapshot de CONFIG.h dans un fichier sidecar (pair avec le CSV).
+        self._snapshot_config(snapshot_file, config_path)
+
         print(f"[DATA] Session {session_num:04d} → {log_file}", flush=True)
         return log_file
