@@ -20,3 +20,5 @@ private:
     int16_t ADC_rudder_value;
     Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 };
+
+#endif
