@@ -6,6 +6,7 @@
 constexpr uint16_t PIN_COM_RUDDER = 2;
 constexpr uint16_t PIN_MODE_CONTROL = 3;
 
+// Single threshold (no hysteresis): the RC mode switch is wide-band, so jitter near 1500 us is not a concern.
 constexpr uint16_t pwm_mode_threshold = 1500;
 constexpr uint16_t pwm_rudder_center = 1500;
 constexpr uint16_t pwm_rudder_max = 2000;
