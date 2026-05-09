@@ -1,7 +1,6 @@
 #include "WINDSENSOR.h"
 
 WINDSENSOR::WINDSENSOR() {
-    ADC_awa_value = 0u;
     awa = 0;
 }
 
@@ -21,7 +20,7 @@ void WINDSENSOR::init() {
 
 
 void WINDSENSOR::update() {
-    ADC_awa_value = analogRead(PIN_WINDSENSOR);
+    const uint16_t ADC_awa_value = analogRead(PIN_WINDSENSOR);
 
     uint32_t tmp = static_cast<uint32_t>(ADC_awa_value) * 360u + 511u;
     awa = static_cast<uint16_t>(tmp / 1023u);
