@@ -21,7 +21,7 @@ void RUDDER::update(){
   rudder_angle = static_cast<int16_t>(k * (ADC_rudder_value - ADC_rudder_center));
 }
 
-int16_t RUDDER::get_rudder_angle() {
+int16_t RUDDER::get_rudder_angle() const {
   return rudder_angle;
 }
 

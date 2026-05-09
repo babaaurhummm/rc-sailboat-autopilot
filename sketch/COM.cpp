@@ -54,14 +54,14 @@ void COM::update() {
   }
 }
 
-uint16_t COM::get_com_rudder() {
+uint16_t COM::get_com_rudder() const {
   return rudder_value;
 }
 
-bool COM::is_unmanned() {
+bool COM::is_unmanned() const {
   return unmanned_status;
 }
 
-bool COM::is_link_lost() {
+bool COM::is_link_lost() const {
   return link_lost;
 }

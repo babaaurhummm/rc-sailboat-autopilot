@@ -85,6 +85,6 @@ void COMPASS::update() {
     }
 }
 
-uint16_t COMPASS::get_heading() {
+uint16_t COMPASS::get_heading() const {
     return heading;
 }

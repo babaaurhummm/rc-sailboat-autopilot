@@ -10,9 +10,9 @@ public:
     COM();
     void init();
     void update();
-    uint16_t get_com_rudder();
-    bool is_unmanned();
-    bool is_link_lost();
+    uint16_t get_com_rudder() const;
+    bool is_unmanned() const;
+    bool is_link_lost() const;
 private:
     uint16_t rudder_value;
     uint16_t mode_control_value;
