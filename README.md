@@ -33,7 +33,6 @@ RC Sailboat Autopilot is an Arduino UNO Q-based autopilot TIPE project for an RC
     ├── CONFIG.h             # Tunable constants and feature flags
     ├── COM.*                # RC / communication input
     ├── COMPASS.*            # Heading source
-    ├── GPS.*                # Position source //not yet implemented
     ├── WINDSENSOR.*         # Apparent wind angle source
     └── RUDDER.*             # Rudder actuation + feedback
 ```
@@ -42,15 +41,15 @@ RC Sailboat Autopilot is an Arduino UNO Q-based autopilot TIPE project for an RC
 
 At each loop iteration:
 
-1. Update all modules (`COM`, `COMPASS`, `GPS`, `WINDSENSOR`, `RUDDER`).
-2. Save telemetry (`timestamp, lat, lng, heading, rudder_angle, awa, unmanned_status`).
+1. Update all modules (`COM`, `COMPASS`, `WINDSENSOR`, `RUDDER`).
+2. Save telemetry (`timestamp_ms, heading_deg, rudder_angle_deg, awa_deg, unmanned_status`).
 3. Apply control:
    - if unmanned mode is active:
      - use heading control (`Kp * (heading_sp - heading)`), or
-     - use AWA-follow control (`Kp * (computed_heading_sp - heading)`).
+     - use AWA-follow control.
    - otherwise: pass through manual rudder command.
 
-The loop frequency is configurable with `loop_frequency_hz` in `CONFIG.h`.
+The loop period is configurable via `loop_period_ms` in `CONFIG.h` (default 100 ms).
 
 ## Configuration
 
@@ -61,23 +60,24 @@ Common values to adjust:
 - Hardware pins (`PIN_*` constants)
 - PWM/ADC calibration values
 - `Kp` proportional gain
-- `loop_frequency_hz` (guarded between 20 and 50 Hz)
+- `loop_period_ms`
 - Feature flags:
-  - `full_unmanned_mode`
-  - `awa_follow_mode`
+  - `FULL_UNMANNED_MODE`
+  - `AWA_FOLLOW_MODE`
 - Setpoints:
   - `heading_sp`
   - `awa_sp`
 
 ## Data logging
 
-The Python side creates CSV logs in `<your project name>/logs` named like:
+Each experiment session produces two paired files in `<project>/logs`:
 
 ```text
 session_000x.csv
+session_000x.config.h
 ```
 
-It also snapshots `sketch/CONFIG.h` into the top of each file so every experiment keeps its configuration context.
+The `.csv` is pure tabular telemetry (loadable by any tool with no comment-line flags). The `.config.h` is a verbatim snapshot of `sketch/CONFIG.h` at session start, so each experiment keeps its configuration context alongside the data.
 
 ## Getting started
 
