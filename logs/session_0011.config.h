@@ -31,7 +31,7 @@ constexpr uint16_t RUDDER_CHANNEL = 0;
 
 constexpr uint8_t HMC5883L_ADDR = 0x1E;
 
-constexpr float Kp = 10;
+constexpr float Kp = 1;
 
 #define FULL_UNMANNED_MODE 0   
 // 1 = manual-only build, 0 = full autopilot

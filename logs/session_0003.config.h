@@ -31,14 +31,14 @@ constexpr uint16_t RUDDER_CHANNEL = 0;
 
 constexpr uint8_t HMC5883L_ADDR = 0x1E;
 
-constexpr float Kp = 10;
+constexpr float Kp = 1;
 
-#define FULL_UNMANNED_MODE 0   
+#define FULL_UNMANNED_MODE 1   
 // 1 = manual-only build, 0 = full autopilot
 #define AWA_FOLLOW_MODE   0   
 // 1 = AWA follow, 0 = heading follow
 
-constexpr int16_t heading_sp = 270;
+constexpr int16_t heading_sp = 0;
 constexpr int16_t awa_sp = 0;
 constexpr uint16_t loop_period_ms = 100;
 

@@ -16,6 +16,7 @@ void WINDSENSOR::init() {
         Monitor.println(analogRead(PIN_WINDSENSOR));
         delay(50); // lecture toutes les 50 ms
     }
+    Monitor.println("[WINDSENSOR] Initialized");
 }
 
 

@@ -18,15 +18,24 @@ void wait_until_next_loop();
 void setup() {
   Bridge.begin();
   Monitor.begin();
-  delay(1000);
+  delay(10000);
+  Monitor.println("FULL UNMANNED MODE");
   com.init();
+  delay(5000);
   rudder.init();
+  delay(5000);
 }
 
 void loop() {
   com.update();
+  rudder.update();
+  // Pour debug
+  // Monitor.println(analogRead(PIN_RUDDER_ADC));
+  Monitor.println(com.get_com_rudder());
+  //Monitor.println(rudder.get_rudder_angle());
+
+  
   rudder.set_rudder_angle_pwm(com.get_com_rudder());
-  wait_until_next_loop();
 }
 
 #else
@@ -38,29 +47,34 @@ int rudder_angle_sp();
 void setup() {
   Bridge.begin();
   Monitor.begin();
-  delay(1000);
+  delay(10000);
+  Monitor.print("Ca a l'air d'etre ok");
   com.init();
   compass.init();
   rudder.init();
   windsensor.init();
+  delay(10000);
 }
 
 void loop() {
-
+  Monitor.println("Boucle");
   update();
   save_data();
 
   if (com.is_unmanned())
   {
+    Monitor.println("Is UNMANNED");
     #if AWA_FOLLOW_MODE
     rudder.set_rudder_angle(rudder_angle_sp(awa_sp));
     #else
+    Monitor.println(rudder_angle_sp(heading_sp));
     rudder.set_rudder_angle(rudder_angle_sp(heading_sp)) ;
     #endif
   }
   else
   {
-    rudder.set_rudder_angle(com.get_com_rudder());
+    Monitor.println("IS MANNED");
+    rudder.set_rudder_angle_pwm(com.get_com_rudder());
   }
 
   wait_until_next_loop();
@@ -78,6 +92,7 @@ void save_data() {
   const int16_t r_angle = rudder.get_rudder_angle();
   uint16_t awa = windsensor.get_awa();
   bool unmanned_status = com.is_unmanned();
+  Monitor.println(heading);
 
   Bridge.notify("save_data", millis(), heading, r_angle, awa, unmanned_status);
 }
