@@ -30,28 +30,13 @@ void COM::update() {
   const uint16_t new_rudder = pulseIn(PIN_COM_RUDDER, HIGH, com_pulse_timeout_us);
   const uint16_t new_mode   = pulseIn(PIN_MODE_CONTROL, HIGH, com_pulse_timeout_us);
 
-  // pulseIn returns 0 on timeout. Keep the last good values and count
-  // consecutive misses so we fail safe instead of silently flipping into
-  // autopilot just because a frame was dropped.
-  if (new_rudder == 0 || new_mode == 0) {
-    if (lost_frames < 255) lost_frames++;
-  } else {
+  // pulseIn returns 0 on timeout; keep the last good values in that case.
+  if (new_rudder != 0 && new_mode != 0) {
     rudder_value = new_rudder;
     mode_control_value = new_mode;
-    lost_frames = 0;
   }
 
-  link_lost = (lost_frames >= com_lost_frames_threshold);
-
-  if (link_lost) {
-    // Failsafe: drop out of autopilot, recenter rudder.
-    unmanned_status = false;
-    rudder_value = pwm_rudder_center;
-  } else if (mode_control_value < pwm_mode_threshold) {
-    unmanned_status = true;
-  } else {
-    unmanned_status = false;
-  }
+  unmanned_status = (mode_control_value < pwm_mode_threshold);
 }
 
 uint16_t COM::get_com_rudder() const {
@@ -60,8 +45,4 @@ uint16_t COM::get_com_rudder() const {
 
 bool COM::is_unmanned() const {
   return unmanned_status;
-}
-
-bool COM::is_link_lost() const {
-  return link_lost;
 }

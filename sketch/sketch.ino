@@ -31,8 +31,8 @@ void loop() {
   rudder.update();
   // Pour debug
   // Monitor.println(analogRead(PIN_RUDDER_ADC));
-  Monitor.println(com.get_com_rudder());
-  //Monitor.println(rudder.get_rudder_angle());
+  //Monitor.println(com.get_com_rudder());
+  Monitor.println(rudder.get_rudder_angle());
 
   
   rudder.set_rudder_angle_pwm(com.get_com_rudder());
